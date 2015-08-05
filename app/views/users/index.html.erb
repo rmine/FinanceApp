@@ -1,0 +1,65 @@
+<%= form_tag users_url, :id=>'search', :method=>:get, :class=>'form-inline' do %>
+    <div class="form-group">
+      <label for="oauth_type" class="control-label">类型:</label>
+    </div>
+    <%= select_tag 'oauth_type', options_for_select(User::SEARCH_OAUTH_TYPE_HASH, params[:oauth_type]),:class=>"form-control" %>
+    <div class="form-group" style="padding-left: 15px">
+      <label for="username" class="control-label">用户名(模糊):</label>
+      <%= text_field_tag :username, params[:username] %>
+    </div>
+    <div class="form-group">
+      <label for="nick" class="control-label">昵称(模糊):</label>
+      <%= text_field_tag :nick, params[:nick] %>
+    </div>
+    <button id="search_btn" type="submit" class="btn btn-default" style="float:right">搜索</button>
+<% end %>
+
+<hr>
+
+<div class="panel panel-info">
+  <div class="panel-heading">用户列表</div>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+        <th class="col-sm-1">用户id</th>
+        <th class="col-sm-1">授权类型</th>
+        <th class="col-sm-2">用户名</th>
+        <th class="col-sm-2">昵称</th>
+        <th class="col-sm-2">头像</th>
+        <th class="col-sm-2">uid</th>
+        <th class="col-sm-2">创建时间</th>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+        <tr>
+          <td title="<%= user.created_at %>"><%= user.id %></td>
+          <td><%= user.type_name %></td>
+          <td><%= user.username %></td>
+          <td><%= user.nick %></td>
+          <td><% if user.avatar.present? %><a class="checked_pic" href="<%= user.avatar %>"><img src="<%= user.avatar %>" height="50px"></a><% end%></td>
+          <td><%= user.uid %></td>
+          <td title="<%= user.created_at%>"><%= user.created_at %></td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
+</div>
+<span>共<%= @users.total_entries %>条</span>
+<%= will_paginate @users, :renderer => BootstrapLinkRenderer, :style=>'float: right' %>
+
+
+<script>
+  $(function(){
+    $("#search_btn").click(function(){
+      $("#search").submit();
+    });
+
+      $('.checked_pic').fancybox();
+  });
+
+
+</script>
+
+
+
+

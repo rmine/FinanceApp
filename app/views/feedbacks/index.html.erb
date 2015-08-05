@@ -1,0 +1,49 @@
+
+<div class="panel panel-info">
+  <div class="panel-heading">用户反馈列表</div>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+        <th class="col-sm-1">id</th>
+        <th class="col-sm-2">用户id</th>
+        <th class="col-sm-4">反馈内容</th>
+        <th class="col-sm-1">联系人</th>
+        <th class="col-sm-4">创建时间</th>
+    </thead>
+    <tbody>
+    <% @feedbacks.each do |feedback| %>
+        <tr>
+          <td><%= feedback.id %></td>
+          <td><%= feedback.user_id %></td>
+          <td><%= feedback.suggest %></td>
+          <td><%= feedback.contact %></td>
+          <td title="<%= feedback.created_at%>"><%= feedback.created_at %></td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
+</div>
+<span>共<%= @feedbacks.total_entries %>条</span>
+<%= will_paginate @feedbacks, :renderer => BootstrapLinkRenderer, :style=>'float: right' %>
+
+
+<script>
+  $(function(){
+    $("#search_btn").click(function(){
+      $("#search").submit();
+    });
+
+    $(".delete_record").click(function(){
+      if(!confirm("确认删除？")) {
+          return false;
+      }
+    });
+
+  });
+
+
+</script>
+
+
+
+

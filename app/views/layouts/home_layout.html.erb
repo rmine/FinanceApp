@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JokeNewsWorld</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+  <style>
+      .module {
+          margin-bottom: 30px;
+      }
+      .footer {
+          text-align: center;
+          padding: 20px 5px 15px 20px;
+          border-top: 1px solid #ddd;
+          margin-bottom: 10px;
+      }
+      .required{
+          color:red;
+      }
+      .right_content{
+          border-left:#ccc 4px solid;
+      }
+  </style>
+
+</head>
+<body>
+
+<div class="page-header">
+  <div class="container">
+    <h1>JNW manager </h1>
+  </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 left_sidebar">
+
+          <div class="module">
+            <div class="input-group">
+              <input type="text" name="" id="" placeholder="搜索" class="form-control">
+              <div class="input-group-btn">
+                <button class="btn btn-primary">搜索</button>
+              </div>
+            </div>
+          </div>
+
+          <ul id="list_sidebar" class="nav nav-pills nav-stacked">
+            <li id="contents"><a href="<%= contents_url %>">内容管理</a></li>
+            <li id="sensitive_words"><a href="<%= sensitive_words_url %>">敏感词过滤</a></li>
+            <li id="users"><a href="<%= users_url %>">用户管理</a></li>
+            <li id="feedbacks"><a href="<%= feedbacks_url %>">用户反馈</a></li>
+            <br>
+            <li id="sessions"><a href="<%= sessions_logout_url %>">登出</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-10 right_content"><%= yield %></div>
+
+
+    </div>
+</div>
+
+<div class="footer">
+  &copy;2014 Jokenewswords
+  </li>
+</div>
+
+<script>
+  $(function(){
+      $("#list_sidebar li").each(function(){
+          if($(this).attr('id') ==  '<%= controller_name%>'){
+              $(this).addClass('active');
+          }else{
+              $(this).removeClass('active');
+          }
+
+      });
+
+  });
+</script>
+
+</body>
+</html>

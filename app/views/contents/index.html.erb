@@ -1,0 +1,120 @@
+<%= form_tag contents_url, :id=>'search', :method=>:get, :class=>'form-inline' do %>
+    <div class="form-group">
+      <label for="content_type" class="control-label">类型:</label>
+    </div>
+    <%= select_tag 'content_type', options_for_select(Content::SEARCH_CONENT_TYPE_HASH, params[:content_type]),:class=>"form-control" %>
+    <div class="form-group" style="padding-left: 15px">
+      <label for="state" class="control-label">状态:</label>
+    </div>
+    <%= select_tag 'state', options_for_select(Content::SEARCH_STATE_TYPE_HASH, params[:state]),:class=>"form-control" %>
+    <button id="search_btn" type="submit" class="btn btn-default" style="float:right">搜索</button>
+<% end %>
+
+<hr>
+<a href="<%= new_content_url %>" type="button" class="btn btn-primary">新增</a>
+
+
+<%= form_tag contents_batch_update_url, :id=>'batch_update_form', :method=>:post do%>
+<div class="panel panel-info">
+  <div class="panel-heading">内容列表</div>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+        <th class="col-sm-0"><input type="checkbox" id="checked_all"></th>
+        <th class="col-sm-1">id</th>
+        <th class="col-sm-1">类型</th>
+        <th class="col-sm-2">标题</th>
+        <th class="col-sm-3">内容</th>
+        <th class="col-sm-1">图片</th>
+        <th class="col-sm-1">点赞</th>
+        <th class="col-sm-1">评论</th>
+        <th class="col-sm-1">状态</th>
+        <th class="col-sm-1">操作</th>
+    </thead>
+    <tbody>
+    <% @contents.each do |content| %>
+        <tr>
+          <td><input type="checkbox" name='ids[]' id="checked" value='<%= content.id %>'></td>
+          <td title="<%= content.created_at %>"><%= content.id %></td>
+          <td><%= content.type_name %></td>
+          <td title="<%= content.title%> <%= content.created_at %>"><%= content.title %></td>
+          <td title="<%= content.content %>"><%= truncate(content.content, :length=>100) %></td>
+          <td><% if content.pic.present? %><a class="checked_pic" href="<%= content.pic %>"><img src="<%= content.pic %>" width="80px" height="50px"></a><% end%></td>
+          <td><%= content.praise_num %></td>
+          <td><%= content.comment_num %></td>
+          <td><%= Content::STATE_TYPE_HASH_INVERT[content.state] %></td>
+          <td>
+            <a target="_blank" href="#"><span title="查看" class="glyphicon glyphicon-list-alt"></span></a>
+            <a target="_blank" href="<%= edit_content_url(:id=>content.id) %>"><span title="修改" class="glyphicon glyphicon-wrench"></span></a>
+            <a class='delete_record' href="<%= contents_delete_record_url(:id=>content.id) %>"><span title="删除" class="glyphicon glyphicon-trash"></span></a>
+          </td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
+</div>
+<span>共<%= @contents.total_entries %>条</span>
+<%= will_paginate @contents, :renderer => BootstrapLinkRenderer, :style=>'float: right' %>
+
+<hr>
+<div class='clearfix'>
+  <div class="radio-inline">
+    <label>
+      <input type="radio" name="state" id="pro" value="<%=Content::ST_APPROVED%>" checked><span>通过</span>
+    </label>
+  </div>  
+  <div class="radio-inline">
+    <label>
+      <input type="radio" name="state" id="del" value="<%=Content::ST_DELETE%>"><span>删除</span>
+    </label>
+  </div>
+  <br>
+  <button id='batch_btn' type="button" class="btn btn-info">批量处理</button>
+</div>
+
+<% end %>
+
+
+<script>
+  $(function(){
+    $("#search_btn").click(function(){
+      $("#search").submit();
+    });
+    
+
+    $('.checked_pic').fancybox();
+
+    $(".delete_record").click(function(){
+      if(!confirm("确认删除？")) {
+          return false;
+      }
+    });
+
+    $('#checked_all').click(function(){
+      if($("#checked_all:checked").length > 0 ){
+        $("input#checked").prop('checked', 'checked');
+      }else{
+        $("input#checked").removeAttr('checked');
+      }
+    });
+
+    $("#batch_btn").click(function(){
+      if($("#checked:checked").length <= 0){
+        alert('至少选择一条记录~');
+        return;
+      }
+      if($("input[type=radio]:checked").length <= 0){
+        alert('请选择操作~');
+        return;
+      }
+      $("#batch_update_form").submit();
+    });
+    
+  });
+
+
+</script>
+
+
+
+
