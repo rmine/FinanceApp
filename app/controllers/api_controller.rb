@@ -266,6 +266,12 @@ class ApiController < ApplicationController
     render 'upload_avatar.json.jbuilder'
   end
 
+
+  ###########################
+  def finance_news_list
+
+  end
+
   private
   def find_content
     Content.find_by_id(params[:content_id])
