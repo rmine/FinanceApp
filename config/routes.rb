@@ -57,6 +57,7 @@ FinanceApp::Application.routes.draw do
 
   ############################################
   get 'api/finance_news_list', :to=>'api#finance_news_list'
+  get 'api/finance_info', :to=>'api#finance_info'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

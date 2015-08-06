@@ -7,7 +7,9 @@ json.results @news do |news|
   json.amount news.amount
   json.company news.product.company.name
   json.company_value_amount news.product.company.value_amount
-  json.finance_at news.finance_at
-  json.finance_organizations news.news_finance_organizations
+  json.finance_at news.finance_at.strftime('%Y-%m-%d %H:%M:%S')
+  json.finance_organizations news.news_finance_organizations, :id, :news_id, :organization_id, :finance_type
 end
-
+json.page @page.to_i
+json.page_size @page_size.to_i
+json.left_page @left_page

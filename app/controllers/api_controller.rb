@@ -269,12 +269,31 @@ class ApiController < ApplicationController
 
   ###########################
   def finance_news_list
-    @news = News.all
-
+    @page = params[:page].blank? ? 1 : params[:page]
+    @page_size = params[:page_size].blank? ? 20 : params[:page_size]
+    @news = News.approved.paginate(:page => @page, :per_page => @page_size).order_created_desc
+    @left_page = News.approved.count.to_i/@page_size.to_i - @page.to_i
     render "finance_news_list.json.jbuilder"
   end
 
+  def finance_info
+    @result_code = 0
+    @result_msg = '参数异常'
+    if params[:news_id].present? && find_news.present?
+      @news = find_news
+      @finance_details = @news.product.news.order_finance_asc
+      @result_code = 1
+      @result_msg = '请求成功'
+    end
+
+    render "finance_info.json.jbuilder"
+  end
+
   private
+  def find_news
+    News.find_by_id(params[:news_id]) if params[:news_id].present?
+  end
+
   def find_content
     Content.find_by_id(params[:content_id])
   end
