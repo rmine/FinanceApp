@@ -1,69 +1,65 @@
-<%= form_tag contents_url, :id=>'search', :method=>:get, :class=>'form-inline' do %>
+<%= form_tag finance_organizations_url, :id=>'search', :method=>:get, :class=>'form-inline' do %>
     <div class="form-group" style="padding-left: 15px">
       <label for="state" class="control-label">状态:</label>
     </div>
-    <%= select_tag 'state', options_for_select(News::SEARCH_STATE_TYPE_HASH, params[:state]),:class=>"form-control" %>
+    <%= select_tag 'state', options_for_select(PublicConstant::SEARCH_STATE_TYPE_HASH, params[:state]),:class=>"form-control" %>
     <button id="search_btn" type="submit" class="btn btn-default" style="float:right">搜索</button>
 <% end %>
 
 <hr>
-<a href="<%= new_news_url %>" type="button" class="btn btn-primary">新增</a>
+<a href="<%= new_finance_organization_url %>" type="button" class="btn btn-primary">新增</a>
 
 
-<%= form_tag news_batch_update_url, :id=>'batch_update_form', :method=>:post do%>
+<%= form_tag finance_organizations_batch_update_url, :id=>'batch_update_form', :method=>:post do%>
 <div class="panel panel-info">
-  <div class="panel-heading">融资新闻列表</div>
+  <div class="panel-heading">公司列表</div>
 
   <table class="table table-bordered table-hover">
     <thead>
         <th class="col-sm-0"><input type="checkbox" id="checked_all"></th>
         <th class="col-sm-0">id</th>
-        <th class="col-sm-2">产品名称</th>
-        <th class="col-sm-2">标题</th>
-        <th class="col-sm-1">融资轮数</th>
-        <th class="col-sm-1">融资金额</th>
-        <th class="col-sm-1">公司估值</th>
-        <th class="col-sm-1">公司名称</th>
-        <th class="col-sm-2">投资机构</th>
+        <th class="col-sm-1">机构类型</th>
+        <th class="col-sm-2">机构名称</th>
+        <th class="col-sm-3">描述</th>
+        <th class="col-sm-2">创建时间</th>
+        <th class="col-sm-2">修改时间</th>
         <th class="col-sm-1">状态</th>
         <th class="col-sm-1">操作</th>
     </thead>
     <tbody>
-    <% @news.each do |data| %>
+    <% @finance_organizations.each do |data| %>
         <tr>
           <td><input type="checkbox" name='ids[]' id="checked" value='<%= data.id %>'></td>
-          <td title="<%= data.created_at %>"><%= data.id %></td>
-          <td><%= data.product.name %></td>
-          <td title="<%= data.title%> <%= data.created_at %>"><%= data.title %></td>
-          <td><%= data.finance_round %></td>
-          <td><%= data.amount%></td>
-          <td><%= data.product.company.value_amount %></td>
-          <td><%= data.product.company.name %></td>
-          <td><%= finance_organizations_list(data.news_finance_organizations) %></td>
-          <td><%= News::STATE_TYPE_HASH_INVERT[data.state] %></td>
+          <td><%= data.id %></td>
+          <td><%= data.is_person == FinanceOrganization::PERSONAL_ORG ? '个人':'组织' %></td>
+          <td><%= data.name %></td>
+          <td><%= data.description %></td>
+          <td><%= data.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <td><%= data.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <td><%= PublicConstant::STATE_TYPE_HASH_INVERT[data.state] %></td>
           <td>
             <a target="" href="#"><span title="查看" class="glyphicon glyphicon-list-alt"></span></a>
-            <a target="" href="<%= edit_news_url(:id=>data.id) %>"><span title="修改" class="glyphicon glyphicon-wrench"></span></a>
-            <a class='delete_record' href="<%= news_delete_record_url(:id=>data.id) %>"><span title="删除" class="glyphicon glyphicon-trash"></span></a>
+            <a target="" href="<%= edit_finance_organization_url(:id=>data.id) %>"><span title="修改" class="glyphicon glyphicon-wrench"></span></a>
+            <a class='delete_record' href="<%= finance_organizations_delete_record_url(:id=>data.id) %>"><span title="删除" class="glyphicon glyphicon-trash"></span></a>
           </td>
         </tr>
     <%end%>
     </tbody>
   </table>
 </div>
-<span>共<%= @news.total_entries %>条</span>
-<%= will_paginate @news, :renderer => BootstrapLinkRenderer, :style=>'float: right' %>
+<span>共<%= @finance_organizations.total_entries %>条</span>
+<%= will_paginate @finance_organizations, :renderer => BootstrapLinkRenderer, :style=>'float: right' %>
 
 <hr>
 <div class='clearfix'>
   <div class="radio-inline">
     <label>
-      <input type="radio" name="state" id="pro" value="<%=News::ST_APPROVED%>" checked><span>通过</span>
+      <input type="radio" name="state" id="pro" value="<%=PublicConstant::ST_APPROVED%>" checked><span>通过</span>
     </label>
   </div>  
   <div class="radio-inline">
     <label>
-      <input type="radio" name="state" id="del" value="<%=News::ST_DELETE%>"><span>删除</span>
+      <input type="radio" name="state" id="del" value="<%=PublicConstant::ST_DELETE%>"><span>删除</span>
     </label>
   </div>
   <br>

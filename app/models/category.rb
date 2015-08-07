@@ -1,4 +1,4 @@
-class Company < ActiveRecord::Base
+class Category < ActiveRecord::Base
   include PublicConstant
   has_many :products, -> {where state:PublicConstant::ST_APPROVED}
 

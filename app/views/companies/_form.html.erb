@@ -28,7 +28,7 @@
     <div class="form-group" id="published_at">
       <label for="published_at" class="col-sm-2 control-label">成立时间</label>
       <div class="col-sm-7" >
-        <input type="text" class="form-control" value="<%= @company.published_at.strftime('%Y-%m-%d')%>" id="company_published_at" name="company[published_at]" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd" readonly>
+        <input type="text" class="form-control" value="<%= @company.published_at.strftime('%Y-%m-%d')  if @company.published_at.present? %>" id="company_published_at" name="company[published_at]" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd" readonly>
       </div>
     </div>
 

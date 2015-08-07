@@ -1,14 +1,14 @@
 <ol class="breadcrumb">
   <li><a href="<%= news_index_url %>">Home</a></li>
-  <li><a href="<%= companies_url %>">公司管理</a></li>
+  <li><a href="<%= categories_url %>">产品类别管理</a></li>
   <li class="active">修改</li>
 </ol>
 
 <div class='clearfix'>
   <div class="radio-inline">
-    <label>数据记录id: <%= @product.id%></label>
+    <label>数据记录id: <%= @category.id%></label>
 </div>
 <hr>
 
 
-<%= render "products/form" %>
+<%= render "categories/form" %>

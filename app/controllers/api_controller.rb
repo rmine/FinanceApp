@@ -292,7 +292,7 @@ class ApiController < ApplicationController
 
   private
   def find_news
-    News.find_by_id(params[:news_id]) if params[:news_id].present?
+    News.where(id: params[:news_id], state: PublicConstant::ST_APPROVED).first if params[:news_id].present?
   end
 
   def find_content

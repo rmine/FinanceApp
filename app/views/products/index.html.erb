@@ -17,30 +17,32 @@
   <table class="table table-bordered table-hover">
     <thead>
         <th class="col-sm-0"><input type="checkbox" id="checked_all"></th>
-        <th class="col-sm-1">id</th>
+        <th class="col-sm-0">id</th>
+        <th class="col-sm-2">产品名称</th>
+        <th class="col-sm-2">产品类别</th>
         <th class="col-sm-2">公司名称</th>
-        <th class="col-sm-2">官网</th>
-        <th class="col-sm-1">公司估值</th>
-        <th class="col-sm-2">创始人</th>
-        <th class="col-sm-2">成立时间</th>
+        <th class="col-sm-1">ios下载</th>
+        <th class="col-sm-1">android下载</th>
+        <th class="col-sm-2">立项时间</th>
         <th class="col-sm-1">状态</th>
         <th class="col-sm-1">操作</th>
     </thead>
     <tbody>
-    <% @companies.each do |data| %>
+    <% @products.each do |data| %>
         <tr>
           <td><input type="checkbox" name='ids[]' id="checked" value='<%= data.id %>'></td>
-          <td title="<%= data.created_at.localtime.to_s(:db) %>"><%= data.id %></td>
+          <td title="<%= data.created_at.localtime.to_s(:db) if data.created_at.present? %>"><%= data.id %></td>
           <td><%= data.name %></td>
-          <td title="<%= data.website%>"><%= data.website %></td>
-          <td><%= data.value_amount %></td>
-          <td><%= data.founder%></td>
-          <td><%= data.published_at.strftime('%Y-%m-%d') %></td>
+          <td><%= data.category.name %></td>
+          <td><%= data.company.name %></td>
+          <td><%= data.ios_downloadurl%></td>
+          <td><%= data.android_downloadurl%></td>
+          <td><%= data.establishmented_at.strftime('%Y-%m-%d') %></td>
           <td><%= PublicConstant::STATE_TYPE_HASH_INVERT[data.state] %></td>
           <td>
             <a target="" href="#"><span title="查看" class="glyphicon glyphicon-list-alt"></span></a>
-            <a target="" href="<%= edit_company_url(:id=>data.id) %>"><span title="修改" class="glyphicon glyphicon-wrench"></span></a>
-            <a class='delete_record' href="<%= companies_delete_record_url(:id=>data.id) %>"><span title="删除" class="glyphicon glyphicon-trash"></span></a>
+            <a target="" href="<%= edit_product_url(:id=>data.id) %>"><span title="修改" class="glyphicon glyphicon-wrench"></span></a>
+            <a class='delete_record' href="<%= products_delete_record_url(:id=>data.id) %>"><span title="删除" class="glyphicon glyphicon-trash"></span></a>
           </td>
         </tr>
     <%end%>

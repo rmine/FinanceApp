@@ -1,0 +1,33 @@
+<%= form_for @category, :html=>{:class=>'form-horizontal', :id=>'new'}  do |f|%>
+
+    <%= render "common/error_messages", :target=>@category %>
+    <div class="form-group">
+      <label for="name" class="col-sm-2 control-label">类别名称</label>
+      <div class="col-sm-7">
+        <%= f.text_field :name, :class=>"form-control",:value=>@category.name %>
+      </div>
+    </div>
+    <div class="form-group" id="website">
+      <label for="description" class="col-sm-2 control-label">描述</label>
+      <div class="col-sm-7">
+        <%= f.text_area :description, :class=>"form-control", :row=>5, :value=>@category.description %>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button id='submit' type="submit" class="btn btn-default">提交</button>
+      </div>
+    </div>
+<% end %>
+
+<script>
+    $(function(){
+        $('#submit').click(function(){
+            $('#new').submit();
+        });
+
+    });
+
+</script>

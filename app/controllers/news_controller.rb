@@ -1,5 +1,6 @@
 class NewsController < ApplicationController
   layout 'home_layout'
+  before_filter :verify_login
   before_action :find_element, :only=>[:show,:edit,:update,:delete_record]
 
   def index
@@ -7,13 +8,13 @@ class NewsController < ApplicationController
   end
 
   def new
-    @content = Content.new
+    @news = News.new
+    @news_finance_organizations = [@news.news_finance_organizations.build]*5
   end
 
   def create
-    @content = Content.new(params[:contents].permit!)
-    if @content.save
-      # redirect_to contents_url
+    @news = News.new(params[:news].permit!)
+    if @news.save
       flash[:error_msg] = '创建成功'
     else
       flash[:error_msg] = '创建失败'
@@ -24,17 +25,19 @@ class NewsController < ApplicationController
   end
 
   def show
-    @news = find_news
+    @news = find_element
   end
 
   def edit
-    @news = find_content
+    @news = find_element
+    @news_finance_organizations = @news.news_finance_organizations
   end
 
   def update
-    @content = find_content
-    result = @content.update_attributes(params[:contents].permit!)
+    @news = find_element
+    result = @news.update_attributes(params[:news].permit!)
     if result
+      flash[:error_msg] = '修改成功'
       redirect_to :back
     else
       flash[:create_msg] = '修改失败'
@@ -43,18 +46,18 @@ class NewsController < ApplicationController
   end
 
   def batch_update
-    contents = Content.where('id in (?)', params[:ids])
-    contents.each do |content|
-      content.update_attributes({:state=>params[:state]})
+    news = News.where('id in (?)', params[:ids])
+    news.each do |news|
+      news.update_attributes({:state=>params[:state]})
     end
 
     redirect_to :back
   end
 
   def delete_record
-    content = find_content
-    content.state = Content::ST_DELETE
-    content.save
+    news = find_element
+    news.state = PublicConstant::ST_DELETE
+    news.save
 
     redirect_to :back
   end

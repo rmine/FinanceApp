@@ -1,8 +1,9 @@
 class Product < ActiveRecord::Base
   include PublicConstant
   has_many :product_histories
-  has_many :news
+  has_many :news, -> {where state:PublicConstant::ST_APPROVED}
   belongs_to :company
+  belongs_to :category
 
   def self.scope_paginate(params)
     page = params[:page].blank? ? 1 : params[:page]

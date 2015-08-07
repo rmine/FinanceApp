@@ -1,19 +1,19 @@
-class CompaniesController < ApplicationController
+class CategoriesController < ApplicationController
   layout 'home_layout'
   before_filter :verify_login
   before_action :find_element, :only=>[:show,:edit,:update,:delete_record]
 
   def index
-    @companies = Company.scope_paginate(params).order('created_at DESC')
+    @categories = Category.scope_paginate(params).order('created_at DESC')
   end
 
   def new
-    @company = Company.new
+    @category = Category.new
   end
 
   def create
-    @company = Company.new(params[:company].permit!)
-    if @company.save
+    @category = Category.new(params[:category].permit!)
+    if @category.save
       flash[:error_msg] = '创建成功'
     else
       flash[:error_msg] = '创建失败'
@@ -24,16 +24,16 @@ class CompaniesController < ApplicationController
   end
 
   def show
-    @company = find_element
+    @category = find_element
   end
 
   def edit
-    @company = find_element
+    @category = find_element
   end
 
   def update
-    @company = find_element
-    result = @company.update_attributes(params[:company].permit!)
+    @category = find_element
+    result = @category.update_attributes(params[:category].permit!)
     if result
       flash[:error_msg] = '修改成功'
       redirect_to :back
@@ -44,8 +44,8 @@ class CompaniesController < ApplicationController
   end
 
   def batch_update
-    companies = Company.where('id in (?)', params[:ids])
-    companies.each do |content|
+    categories = Category.where('id in (?)', params[:ids])
+    categories.each do |content|
       content.update_attributes({:state=>params[:state]})
     end
 
@@ -53,15 +53,15 @@ class CompaniesController < ApplicationController
   end
 
   def delete_record
-    company = find_element
-    company.state = PublicConstant::ST_DELETE
-    company.save
+    category = find_element
+    category.state = PublicConstant::ST_DELETE
+    category.save
 
     redirect_to :back
   end
 
   private
   def find_element
-    Company.find(params[:id]) if params[:id].present?
+    Category.find(params[:id]) if params[:id].present?
   end
 end

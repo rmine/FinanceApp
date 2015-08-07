@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   layout 'home_layout'
+  before_filter :verify_login
   before_action :find_element, :only=>[:show,:edit,:update,:delete_record]
 
   def index
@@ -11,8 +12,8 @@ class ProductsController < ApplicationController
   end
 
   def create
-    @product = Product.new(params[:products].permit!)
-    if @content.save
+    @product = Product.new(params[:product].permit!)
+    if @product.save
       flash[:error_msg] = '创建成功'
     else
       flash[:error_msg] = '创建失败'

@@ -3,7 +3,20 @@ class News < ActiveRecord::Base
   has_many :news_finance_organizations
   belongs_to :product
 
+  accepts_nested_attributes_for :news_finance_organizations, allow_destroy: true
+
   scope :order_finance_asc, ->{order('finance_at asc')}
+
+  FINANCE_ROUND_HASH = {
+      "天使" => "天使",
+      "Pre-A" => "Pre-A",
+      "A" => "A",
+      "A+" => "A+",
+      "B" => "B",
+      "C" => "C",
+      "D" => "D",
+      "E" => "E"
+  }
 
   def self.scope_paginate(params)
     page = params[:page].blank? ? 1 : params[:page]
