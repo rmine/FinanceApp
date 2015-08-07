@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JokeNewsWorld</title>
+  <title>FinanceApp</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -28,7 +28,7 @@
 
 <div class="page-header">
   <div class="container">
-    <h1>JNW manager </h1>
+    <h1>FinanceApp manager </h1>
   </div>
 </div>
 
@@ -46,6 +46,12 @@
           </div>
 
           <ul id="list_sidebar" class="nav nav-pills nav-stacked">
+            <li id="news"><a href="<%= news_index_url %>">新闻管理</a></li>
+            <li id="products"><a href="<%= products_url %>">产品管理</a></li>
+            <li id="companies"><a href="<%= companies_url %>">公司管理</a></li>
+            <li id="finance_organizations"><a href="<%= finance_organizations_url %>">投资机构管理</a></li>
+            <li id="categories"><a href="<%= categories_url %>">产品类别管理</a></li>
+            <hr>
             <li id="contents"><a href="<%= contents_url %>">内容管理</a></li>
             <li id="sensitive_words"><a href="<%= sensitive_words_url %>">敏感词过滤</a></li>
             <li id="users"><a href="<%= users_url %>">用户管理</a></li>
@@ -62,7 +68,7 @@
 </div>
 
 <div class="footer">
-  &copy;2014 Jokenewswords
+  &copy;2015 Finance
   </li>
 </div>
 

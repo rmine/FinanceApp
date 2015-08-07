@@ -1,0 +1,14 @@
+<ol class="breadcrumb">
+  <li><a href="<%= news_index_url %>">Home</a></li>
+  <li><a href="<%= companies_url %>">公司管理</a></li>
+  <li class="active">修改</li>
+</ol>
+
+<div class='clearfix'>
+  <div class="radio-inline">
+    <label>数据记录id: <%= @company.id%></label>
+</div>
+<hr>
+
+
+      <%= render "companies/form" %>
