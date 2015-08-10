@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-FinanceApp::Application.config.secret_key_base = '7e0190898501e8ed203980689974c5f24fb4e9bcad39d068122d409a89c2511b35c7b3e495596fa67c6149c13bba41c86798a2530f4f81a5cae384963a595dc8'
+FinanceApp::Application.config.secret_key_base = '7e0190898501e8ed203980689974c5f24fb4e9bcad39d168122d419a89c2591b35c7b3e495596fa67c6149c13bba41c86798a2530f4f81a5cae384963a595dc8'
