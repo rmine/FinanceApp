@@ -14,12 +14,11 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(params[:category].permit!)
     if @category.save
-      flash[:error_msg] = '创建成功'
+      flash[:success_msg] = '创建成功'
+      redirect_to :back
     else
-      flash[:error_msg] = '创建失败'
+      render :action=>:new
     end
-
-    redirect_to :back
 
   end
 
@@ -35,10 +34,9 @@ class CategoriesController < ApplicationController
     @category = find_element
     result = @category.update_attributes(params[:category].permit!)
     if result
-      flash[:error_msg] = '修改成功'
+      flash[:success_msg] = '修改成功'
       redirect_to :back
     else
-      flash[:error_msg] = '修改失败'
       render :action=>:edit
     end
   end

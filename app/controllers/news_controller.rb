@@ -15,12 +15,12 @@ class NewsController < ApplicationController
   def create
     @news = News.new(params[:news].permit!)
     if @news.save
-      flash[:error_msg] = '创建成功'
+      flash[:success_msg] = '创建成功'
+      redirect_to :back
     else
-      flash[:error_msg] = '创建失败'
+      @news_finance_organizations = @news.news_finance_organizations
+      render :action=>:new
     end
-
-    redirect_to :back
 
   end
 
@@ -37,10 +37,10 @@ class NewsController < ApplicationController
     @news = find_element
     result = @news.update_attributes(params[:news].permit!)
     if result
-      flash[:error_msg] = '修改成功'
+      flash[:success_msg] = '修改成功'
       redirect_to :back
     else
-      flash[:create_msg] = '修改失败'
+      @news_finance_organizations = @news.news_finance_organizations
       render :action=>:edit
     end
   end

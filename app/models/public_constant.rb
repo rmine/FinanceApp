@@ -53,4 +53,16 @@ module PublicConstant
     end
   end
 
+  class GoodnessValidator < ActiveModel::Validator
+    def validate(record)
+      if options[:fields].present?
+        options[:fields].each do |field|
+          if record.send(field[0]).blank?
+            record.errors[:base] << "(#{field[1]}) 不能为空 "
+          end
+        end
+      end
+    end
+  end
+
 end

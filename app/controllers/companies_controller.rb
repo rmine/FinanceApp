@@ -14,12 +14,11 @@ class CompaniesController < ApplicationController
   def create
     @company = Company.new(params[:company].permit!)
     if @company.save
-      flash[:error_msg] = '创建成功'
+      flash[:success_msg] = '创建成功'
+      redirect_to :back
     else
-      flash[:error_msg] = '创建失败'
+      render :action=>:new
     end
-
-    redirect_to :back
 
   end
 
@@ -35,10 +34,9 @@ class CompaniesController < ApplicationController
     @company = find_element
     result = @company.update_attributes(params[:company].permit!)
     if result
-      flash[:error_msg] = '修改成功'
+      flash[:success_msg] = '修改成功'
       redirect_to :back
     else
-      flash[:error_msg] = '修改失败'
       render :action=>:edit
     end
   end

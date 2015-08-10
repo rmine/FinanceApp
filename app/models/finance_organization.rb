@@ -10,6 +10,10 @@ class FinanceOrganization < ActiveRecord::Base
       "组织"=>GROUP_ORG
   }
 
+  validates_with PublicConstant::GoodnessValidator, fields: {:is_person=>"机构类型",
+                                                             :name=>"机构名称",
+                                                             :description=>"描述"}
+
   def self.scope_paginate(params)
     page = params[:page].blank? ? 1 : params[:page]
     page_size = params[:page_size].blank? ? 20 : params[:page_size]

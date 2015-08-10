@@ -10,8 +10,15 @@
     </div>
 <% end %>
 
-<% if flash[:error_msg].present? %>
+<% if flash[:success_msg].present? %>
     <div class="alert alert-block alert-success">
+      <a class="close" data-dismiss='alert' href="#">×</a>
+      <p><strong><%= flash[:success_msg] %></strong></p>
+    </div>
+<% end %>
+
+<% if flash[:error_msg].present? %>
+    <div class="alert alert-block alert-danger">
       <a class="close" data-dismiss='alert' href="#">×</a>
       <p><strong><%= flash[:error_msg] %></strong></p>
     </div>

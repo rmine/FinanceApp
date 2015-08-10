@@ -14,12 +14,11 @@ class FinanceOrganizationsController < ApplicationController
   def create
     @finance_organization = FinanceOrganization.new(params[:finance_organization].permit!)
     if @finance_organization.save
-      flash[:error_msg] = '创建成功'
+      flash[:success_msg] = '创建成功'
+      redirect_to :back
     else
-      flash[:error_msg] = '创建失败'
+      render :action=>:new
     end
-
-    redirect_to :back
 
   end
 
@@ -35,10 +34,9 @@ class FinanceOrganizationsController < ApplicationController
     @finance_organization = find_element
     result = @finance_organization.update_attributes(params[:finance_organization].permit!)
     if result
-      flash[:error_msg] = '修改成功'
+      flash[:success_msg] = '修改成功'
       redirect_to :back
     else
-      flash[:error_msg] = '修改失败'
       render :action=>:edit
     end
   end

@@ -18,6 +18,14 @@ class News < ActiveRecord::Base
       "E" => "E"
   }
 
+  validates_with PublicConstant::GoodnessValidator, fields: {:title=>"新闻标题",
+                                                             :amount=>"融资金额",
+                                                             :source_from=>"新闻来源",
+                                                             :source_url=>"新闻链接",
+                                                             :finance_at=>"投资时间"
+                                                  }
+  validates_associated :news_finance_organizations
+
   def self.scope_paginate(params)
     page = params[:page].blank? ? 1 : params[:page]
     page_size = params[:page_size].blank? ? 20 : params[:page_size]

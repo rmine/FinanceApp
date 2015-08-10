@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="form-group" id="is_person">
-      <label for="value_amount" class="col-sm-2 control-label">所属公司名称</label>
+      <label for="value_amount" class="col-sm-2 control-label">机构类型</label>
       <div class="col-sm-7">
         <%= f.select :is_person, options_for_select(FinanceOrganization::ORG_TYPE, @finance_organization.is_person),:class=>"form-control" %>
       </div>

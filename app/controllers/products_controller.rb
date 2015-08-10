@@ -14,12 +14,11 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(params[:product].permit!)
     if @product.save
-      flash[:error_msg] = '创建成功'
+      flash[:success_msg] = '创建成功'
+      redirect_to :back
     else
-      flash[:error_msg] = '创建失败'
+      render :action=>:new
     end
-
-    redirect_to :back
 
   end
 
@@ -35,10 +34,9 @@ class ProductsController < ApplicationController
     @product = find_element
     result = @product.update_attributes(params[:product].permit!)
     if result
-      flash[:error_msg] = '修改成功'
+      flash[:success_msg] = '修改成功'
       redirect_to :back
     else
-      flash[:error_msg] = '修改失败'
       render :action=>:edit
     end
   end
