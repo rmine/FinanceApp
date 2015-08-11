@@ -272,8 +272,7 @@ class ApiController < ApplicationController
     @page = params[:page].blank? ? 1 : params[:page]
     @page_size = params[:page_size].blank? ? 20 : params[:page_size]
     @news = News.approved.paginate(:page => @page, :per_page => @page_size).order_created_desc
-    total_number = (News.approved.count.to_i/@page_size.to_i) == 0 ? 1 : (News.approved.count.to_i/@page_size.to_i)
-    @left_page = total_number - @page.to_i
+    @total_page = (News.approved.count.to_i/@page_size.to_i) == 0 ? 1 : (News.approved.count.to_i/@page_size.to_i)
     render "finance_news_list.json.jbuilder"
   end
 

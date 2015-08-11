@@ -19,4 +19,4 @@ json.results @news do |news|
 end
 json.page @page.to_i
 json.page_size @page_size.to_i
-json.left_page @left_page
+json.total_page @total_page
