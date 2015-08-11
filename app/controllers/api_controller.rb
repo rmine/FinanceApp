@@ -1,6 +1,6 @@
 # coding: utf-8
 class ApiController < ApplicationController
-  skip_before_filter :verify_authenticity_token,:only=>[:register_user, :register, :login, :update_password,:submit_comment, :feedbacks, :upload_avatar]
+  skip_before_filter :verify_authenticity_token,:only=>[:finance_news_list, :finance_info]
   before_filter :find_content, :only => [:collect_content, :uncollect_content, :submit_comment]
 
 	def index
